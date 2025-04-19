@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="todo-container">
+    <h1>To-Do List</h1>
+
+    <div class="datetime">
+      <p id="dateDisplay">Date: --/--/----</p>
+      <p id="timeDisplay">Time: --:--:--</p>
+    </div>
+
+    <form id="taskForm" class="input-section">
+      <input type="text" id="taskInput" placeholder="Add a new task..." autocomplete="off" />
+      <button type="submit">Add</button>
+    </form>
+
+    <ul id="taskList"></ul>
+  </div>
+  <div id="popupMessage" class="popup hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
