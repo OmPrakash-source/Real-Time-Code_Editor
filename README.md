@@ -43,7 +43,5 @@ A real-time collaborative code editor built with Node.js, Socket.IO, MongoDB, an
 - Code compilation via Judge0 API
 - Room management
 
-
-cd c:\Users\omjha\OneDrive\Desktop\The\project-root
-
+cd c:\Users\project-root
 npm run dev
