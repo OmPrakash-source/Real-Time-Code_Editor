@@ -41,7 +41,7 @@ app.use('/room', roomRoutes);
 app.use('/compile', compileRoutes);
 
 // Catch-all for SPA (serves index.html)
-app.get('*', async (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
@@ -49,9 +49,7 @@ app.get('*', async (req, res) => {
 initSocket(io);
 
 // ---- MongoDB Connection ----
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mydb';
-
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
