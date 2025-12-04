@@ -1,0 +1,297 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  color: #e5f0ff;
+  height: 100vh;
+  display: flex;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.app-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(23, 42, 70, 0.9), rgba(5, 8, 18, 0.95));
+  backdrop-filter: blur(10px);
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(5, 8, 18, 0.7);
+}
+
+.room-controls,
+.editor-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#roomIdInput {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  background: rgba(15, 23, 42, 0.8);
+  color: inherit;
+  min-width: 180px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+#roomIdInput:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#languageSelect,
+#activeEditorSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.8);
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#languageSelect:hover,
+#activeEditorSelect:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+#languageSelect:focus,
+#activeEditorSelect:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.6);
+}
+
+#currentRoomLabel {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  padding: 4px 12px;
+  background: rgba(96, 165, 250, 0.1);
+  border-radius: 6px;
+}
+
+.main-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  padding: 16px 20px;
+  min-height: 0;
+}
+
+.dual-editor-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-height: 0;
+}
+
+.editor-screen {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.editor-header {
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(147, 51, 234, 0.15));
+  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #93c5fd;
+}
+
+.editor-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.output-panel h2 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #c4b5fd;
+}
+
+.output-panel label {
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+
+#stdinInput {
+  width: 100%;
+  resize: vertical;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(3, 6, 23, 0.9);
+  color: inherit;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+
+#stdinInput:focus {
+  outline: none;
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.output-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  min-height: 80px;
+}
+
+.output-section h3 {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: #a5b4fc;
+}
+
+.output-section pre {
+  flex: 1;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  overflow: auto;
+  background: rgba(6, 11, 32, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  line-height: 1.5;
+}
+
+.output-meta {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  padding: 6px 10px;
+  background: rgba(96, 165, 250, 0.05);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Remote cursor styling in Monaco */
+.remote-cursor {
+  border-left: 2px solid #f97316;
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr;
+  }
+  
+  .dual-editor-layout {
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .room-controls,
+  .editor-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dual-editor-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  #roomIdInput {
+    min-width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}

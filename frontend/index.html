@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Real-Time Collaborative Code Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Real-Time Collaborative Code Editor</h1>
+    </header>
+
+    <section class="controls">
+      <div class="room-controls">
+        <input
+          type="text"
+          id="roomIdInput"
+          placeholder="Room ID"
+          autocomplete="off"
+        />
+        <button id="createRoomBtn">Create Room</button>
+        <button id="joinRoomBtn">Join Room</button>
+        <span id="currentRoomLabel"></span>
+      </div>
+
+      <div class="editor-controls">
+        <label for="languageSelect">Language:</label>
+        <select id="languageSelect">
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="javascript" selected>JavaScript</option>
+        </select>
+
+        <button id="runCodeBtn">Run</button>
+        <label for="activeEditorSelect">Compile:</label>
+        <select id="activeEditorSelect">
+          <option value="A">Screen A</option>
+          <option value="B">Screen B</option>
+        </select>
+      </div>
+    </section>
+
+    <main class="main-layout">
+      <div class="dual-editor-layout">
+        <div class="editor-screen">
+          <div class="editor-header">Screen A</div>
+          <div id="editorContainerA" class="editor-container"></div>
+        </div>
+
+        <div class="editor-screen">
+          <div class="editor-header">Screen B</div>
+          <div id="editorContainerB" class="editor-container"></div>
+        </div>
+      </div>
+
+      <div class="output-panel">
+        <h2>Output</h2>
+        <label for="stdinInput">stdin (optional):</label>
+        <textarea id="stdinInput" rows="3"></textarea>
+
+        <div class="output-section">
+          <h3>stdout</h3>
+          <pre id="stdout"></pre>
+        </div>
+        <div class="output-section">
+          <h3>stderr</h3>
+          <pre id="stderr"></pre>
+        </div>
+        <div class="output-meta" id="executionMeta"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Monaco loader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+
+  <!-- App scripts -->
+  <script src="socket.js"></script>
+  <script src="EditorComponent.js"></script>
+  <script src="EditorA.js"></script>
+  <script src="EditorB.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
