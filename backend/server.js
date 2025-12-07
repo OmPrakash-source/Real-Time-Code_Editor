@@ -49,10 +49,7 @@ app.get('*', (req, res) => {
 initSocket(io);
 
 // ---- MongoDB Connection ----
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
@@ -64,7 +61,7 @@ cron.schedule('*/15 * * * *', async () => {
   try {
     console.log(' Running cleanup job...');
 
-    const expiryDate = new Date(Date.now() - FILE_EXPIRY_HOURS * 60 * 60 * 1000);
+    const expiryDate = new Date(Date.now() - FILE_EXPIRY_HOURS * 60 * 60 * 1000); //after every 6hr cleanup file automatic
 
     // Delete old files
     const oldFiles = await File.find({ lastUpdated: { $lt: expiryDate } });
@@ -80,7 +77,7 @@ cron.schedule('*/15 * * * *', async () => {
     const emptyRoomIds = emptyRooms.map((r) => r.roomId);
 
     if (emptyRooms.length > 0) {
-      await Room.deleteMany({ roomId: { $in: emptyRoomIds } });
+      await Room.deleteMany({ roomId: { $in: emptyRoomIds } }); //without done totally this work run next line to save time this task take time to complete
       await UserSession.deleteMany({ roomId: { $in: emptyRoomIds } });
       console.log(`Deleted ${emptyRooms.length} empty rooms`);
     }
@@ -91,7 +88,7 @@ cron.schedule('*/15 * * * *', async () => {
   }
 });
 
-// ---- Start Server ----
+//Start server 
 const PORT = process.env.PORT || 4000;
 
 server.listen(PORT, () => {

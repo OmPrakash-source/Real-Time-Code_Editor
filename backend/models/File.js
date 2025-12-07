@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
 const FileSchema = new mongoose.Schema({
-    roomId: {
+    roomId: { //room it thare code belong's to
         type: String,
-        required: true,
-        index: true
+        required: true, //Room ID it can't be null and empty
+        index: true //Index for faster lookup
     },
     code: {
-        type: String,
-        default: ''
+        type: String, //ex- code: "console.log('Hello World');"
+        default: '', //Default code is empty string
     },
     lastUpdated: {
         type: Date,
-        default: Date.now
+        default: Date.now //Default lastUpdated is current time
     }
 });
 

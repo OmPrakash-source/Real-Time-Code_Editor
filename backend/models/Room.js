@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
-    roomId: {
+    roomId: { //actual room id that create for user
         type: String,
         required: true,
         unique: true,
@@ -13,11 +13,11 @@ const RoomSchema = new mongoose.Schema({
     },
     codeA: {
         type: String,
-        default: ''
+        default: 'console.log("Hello World")'
     },
     codeB: {
         type: String,
-        default: ''
+        default: 'console.log("Hello World")'
     },
     createdAt: {
         type: Date,

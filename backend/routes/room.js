@@ -1,3 +1,4 @@
+// assign new room id to user if it exist then show error
 const express = require('express');
 const Room = require('../models/Room');
 const File = require('../models/File');
@@ -5,10 +6,10 @@ const generateRoomId = require('../utils/idGenerator');
 
 const router = express.Router();
 
-/**
- * POST /room/create
- * Creates a new room and associated file entry.
- * Optional: client can pass custom roomId in body.
+/*
+  POST /room/create
+  Creates a new room and associated file entry.
+  Optional: client can pass custom roomId in body.
  */
 router.post('/create', async (req, res) => {
     try {

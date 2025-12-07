@@ -21,7 +21,7 @@ const socketRoomMap = new Map();
  */
 module.exports = function initSocket(io) {
     io.on('connection', (socket) => {
-        console.log('New socket connected:', socket.id);
+        console.log('New socket connected:- ', socket.id);
 
         socket.on('join_room', async ({ roomId, userId, language }) => {
             try {
@@ -40,8 +40,9 @@ module.exports = function initSocket(io) {
                             createdAt: new Date()
                         },
                         $addToSet: { members: userId }
-                    },
-                    { new: true, upsert: true }
+                    },{
+                        new: true, upsert: true
+                      }
                 );
 
                 // Ensure file exists

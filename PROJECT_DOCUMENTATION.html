@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Collaborative Code Editor - Project Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .subsection-title {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea30;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            display: flex;
+            align-items: center;
+        }
+
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .layer {
+            background: white;
+            padding: 20px;
+            margin: 15px auto;
+            border-radius: 8px;
+            max-width: 600px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .layer-title {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .layer-content {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .data-flow {
+            background: linear-gradient(to right, #667eea15, #764ba215);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .flow-step strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .feature-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-right: 5px;
+        }
+
+        .workflow-diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Real-Time Collaborative Code Editor</h1>
+            <p class="subtitle">Major Project Documentation</p>
+            <p style="margin-top: 20px; font-size: 0.95em;">A professional-grade collaborative coding platform for real-time programming</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Abstract / Executive Summary -->
+            <section class="section">
+                <h2 class="section-title">📋 Executive Summary</h2>
+                <div class="info-box">
+                    <p><strong>Project Name:</strong> Real-Time Collaborative Code Editor</p>
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Category:</strong> Web Application / Collaborative Tool</p>
+                    <p style="margin-top: 15px;">
+                        The Real-Time Collaborative Code Editor is a web-based platform that enables multiple users to write, 
+                        edit, and compile code simultaneously in real-time. Built with modern web technologies, it provides a 
+                        seamless collaborative coding experience similar to Google Docs but specifically designed for programmers. 
+                        The system supports multiple programming languages (C, C++, Java, Python, JavaScript) and features dual 
+                        editor screens for enhanced productivity.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Problem Statement -->
+            <section class="section">
+                <h2 class="section-title">🎯 Problem Statement</h2>
+                <p>In modern software development and educational environments, there is a growing need for tools that enable:</p>
+                <ul>
+                    <li><strong>Remote Collaboration:</strong> Developers working from different locations need to collaborate on code in real-time</li>
+                    <li><strong>Learning Support:</strong> Students and educators require platforms for pair programming and code review sessions</li>
+                    <li><strong>Instant Feedback:</strong> The ability to compile and execute code immediately without environment setup</li>
+                    <li><strong>Multi-Language Support:</strong> A unified platform supporting various programming languages</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    This project addresses these challenges by providing a comprehensive, real-time collaborative coding environment 
+                    accessible through any web browser.
+                </p>
+            </section>
+
+            <!-- System Architecture -->
+            <section class="section">
+                <h2 class="section-title">🏗️ System Architecture</h2>
+                
+                <div class="architecture-diagram">
+                    <h3 style="margin-bottom: 20px; color: #667eea;">Three-Tier Architecture</h3>
+                    
+                    <div class="layer">
+                        <div class="layer-title">🖥️ Presentation Layer (Frontend)</div>
+                        <div class="layer-content">
+                            Monaco Editor • HTML5 • CSS3 • Vanilla JavaScript • Socket.IO Client
+                        </div>
+                    </div>
+
+                    <div style="font-size: 2em; color: #667eea; margin: 10px 0;">⬍⬍</div>
+
+                    <div class="layer">
+                        <div class="layer-title">⚙️ Application Layer (Backend)</div>
+                        <div class="layer-content">
+                            Node.js • Express.js • Socket.IO Server • REST APIs • Judge0 Integration
+                        </div>
+                    </div>
+
+                    <div style="font-size: 2em; color: #667eea; margin: 10px 0;">⬍⬍</div>
+
+                    <div class="layer">
+                        <div class="layer-title">💾 Data Layer (Database)</div>
+                        <div class="layer-content">
+                            MongoDB • Mongoose ODM • Room Management • Code Persistence • User Sessions
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Component Diagram</h3>
+                <div class="data-flow">
+                    <div class="flow-step">
+                        <strong>Client Browser</strong> → Sends HTTP requests and establishes WebSocket connection
+                    </div>
+                    <div class="flow-step">
+                        <strong>Express Server</strong> → Handles API routes (/room, /compile) and serves static files
+                    </div>
+                    <div class="flow-step">
+                        <strong>Socket.IO</strong> → Manages real-time bidirectional communication between clients
+                    </div>
+                    <div class="flow-step">
+                        <strong>MongoDB</strong> → Stores room data, code snapshots, and user sessions
+                    </div>
+                    <div class="flow-step">
+                        <strong>Judge0 API</strong> → External service for code compilation and execution
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technology Stack -->
+            <section class="section">
+                <h2 class="section-title">💻 Technology Stack</h2>
+                
+                <h3 class="subsection-title">Backend Technologies</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <div class="tech-icon">N</div>
+                        <div>
+                            <strong>Node.js v18+</strong><br>
+                            <small>JavaScript runtime environment</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">E</div>
+                        <div>
+                            <strong>Express.js v4.19</strong><br>
+                            <small>Web application framework</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">S</div>
+                        <div>
+                            <strong>Socket.IO v4.8</strong><br>
+                            <small>Real-time WebSocket communication</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">M</div>
+                        <div>
+                            <strong>MongoDB v8.0</strong><br>
+                            <small>NoSQL database</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔧</div>
+                        <div>
+                            <strong>Mongoose v8.0</strong><br>
+                            <small>ODM for MongoDB</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">⏰</div>
+                        <div>
+                            <strong>Node-Cron v3.0</strong><br>
+                            <small>Scheduled task automation</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Frontend Technologies</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <div class="tech-icon">M</div>
+                        <div>
+                            <strong>Monaco Editor</strong><br>
+                            <small>VS Code's powerful code editor</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">H</div>
+                        <div>
+                            <strong>HTML5</strong><br>
+                            <small>Markup language</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">C</div>
+                        <div>
+                            <strong>CSS3</strong><br>
+                            <small>Styling and layout</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">J</div>
+                        <div>
+                            <strong>JavaScript (ES6+)</strong><br>
+                            <small>Client-side logic</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">External APIs & Tools</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <div class="tech-icon">⚖</div>
+                        <div>
+                            <strong>Judge0 CE</strong><br>
+                            <small>Code execution engine</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔄</div>
+                        <div>
+                            <strong>Axios v1.7</strong><br>
+                            <small>HTTP client for API calls</small>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">Y</div>
+                        <div>
+                            <strong>Yjs / Y-WebSocket</strong><br>
+                            <small>CRDT for collaborative editing</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="section">
+                <h2 class="section-title">✨ Key Features</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>🤝 Real-Time Collaboration</h3>
+                        <p>Multiple users can edit code simultaneously with instant synchronization. Changes made by one user are immediately visible to all participants in the room.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>👥 Dual Editor Support</h3>
+                        <p>Two independent code editor screens (Screen A & Screen B) allowing users to work on different files or compare implementations side-by-side.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🌐 Multi-Language Support</h3>
+                        <p>Supports 5 popular programming languages: C, C++, Java, Python, and JavaScript with syntax highlighting and auto-completion.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>▶️ Code Compilation & Execution</h3>
+                        <p>Integrated Judge0 API enables users to compile and run code directly from the browser with custom input and detailed output.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🏠 Room Management</h3>
+                        <p>Create unique rooms with custom IDs or auto-generated identifiers. Share room IDs with collaborators to work together.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>💾 Auto-Save & Persistence</h3>
+                        <p>Code is automatically saved to MongoDB with debouncing (3-second delay) to prevent excessive database writes.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🔄 Language Switching</h3>
+                        <p>Switch between programming languages on-the-fly. Changes sync across all users in the room automatically.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🧹 Automated Cleanup</h3>
+                        <p>Cron job runs every 15 minutes to delete old files (6+ hours) and empty rooms, maintaining database efficiency.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>👤 User Session Management</h3>
+                        <p>Tracks active users in each room with automatic session creation and cleanup when users disconnect.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>📊 Execution Metrics</h3>
+                        <p>Displays execution time and memory usage for compiled code, helping users optimize their programs.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🎨 Monaco Editor Integration</h3>
+                        <p>Leverages VS Code's Monaco Editor providing professional-grade features like IntelliSense and code formatting.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>🔗 URL-Based Room Access</h3>
+                        <p>Room ID is stored in URL parameters, allowing users to bookmark or share direct links to collaboration sessions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database Schema -->
+            <section class="section">
+                <h2 class="section-title">🗄️ Database Schema</h2>
+                
+                <h3 class="subsection-title">Room Collection</h3>
+                <div class="highlight">
+                    <p><strong>Purpose:</strong> Stores room metadata and member information</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>roomId</code></td>
+                            <td>String</td>
+                            <td>Unique identifier for the room (indexed)</td>
+                        </tr>
+                        <tr>
+                            <td><code>language</code></td>
+                            <td>String</td>
+                            <td>Current programming language (default: 'javascript')</td>
+                        </tr>
+                        <tr>
+                            <td><code>codeA</code></td>
+                            <td>String</td>
+                            <td>Code content for Screen A</td>
+                        </tr>
+                        <tr>
+                            <td><code>codeB</code></td>
+                            <td>String</td>
+                            <td>Code content for Screen B</td>
+                        </tr>
+                        <tr>
+                            <td><code>createdAt</code></td>
+                            <td>Date</td>
+                            <td>Room creation timestamp</td>
+                        </tr>
+                        <tr>
+                            <td><code>members</code></td>
+                            <td>Array[String]</td>
+                            <td>List of user IDs currently in the room</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">File Collection</h3>
+                <div class="highlight">
+                    <p><strong>Purpose:</strong> Tracks file metadata and last update time for cleanup</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>roomId</code></td>
+                            <td>String</td>
+                            <td>Associated room identifier (indexed)</td>
+                        </tr>
+                        <tr>
+                            <td><code>code</code></td>
+                            <td>String</td>
+                            <td>Code content (legacy field)</td>
+                        </tr>
+                        <tr>
+                            <td><code>lastUpdated</code></td>
+                            <td>Date</td>
+                            <td>Timestamp of last modification</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">UserSession Collection</h3>
+                <div class="highlight">
+                    <p><strong>Purpose:</strong> Manages active user sessions within rooms</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>userId</code></td>
+                            <td>String</td>
+                            <td>Unique user identifier</td>
+                        </tr>
+                        <tr>
+                            <td><code>roomId</code></td>
+                            <td>String</td>
+                            <td>Associated room identifier</td>
+                        </tr>
+                        <tr>
+                            <td><code>socketId</code></td>
+                            <td>String</td>
+                            <td>WebSocket connection identifier</td>
+                        </tr>
+                        <tr>
+                            <td><code>joinedAt</code></td>
+                            <td>Date</td>
+                            <td>Session start timestamp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- API Endpoints -->
+            <section class="section">
+                <h2 class="section-title">🌐 API Endpoints</h2>
+                
+                <h3 class="subsection-title">Room Management APIs</h3>
+                
+                <div class="info-box">
+                    <p><strong>POST /room/create</strong></p>
+                    <p><strong>Description:</strong> Creates a new collaboration room</p>
+                    <p><strong>Request Body:</strong></p>
+                    <pre>{
+  "roomId": "optional-custom-id",
+  "language": "javascript"
+}</pre>
+                    <p><strong>Response:</strong></p>
+                    <pre>{
+  "roomId": "abc12345",
+  "language": "javascript"
+}</pre>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>GET /room/:roomId</strong></p>
+                    <p><strong>Description:</strong> Retrieves room metadata and initial code</p>
+                    <p><strong>Response:</strong></p>
+                    <pre>{
+  "room": {
+    "roomId": "abc12345",
+    "language": "javascript",
+    "members": ["user1", "user2"],
+    "createdAt": "2025-12-07T15:24:19.000Z"
+  },
+  "file": {
+    "code": "console.log('Hello World');",
+    "lastUpdated": "2025-12-07T15:30:00.000Z"
+  }
+}</pre>
+                </div>
+
+                <h3 class="subsection-title">Compilation API</h3>
+                
+                <div class="info-box">
+                    <p><strong>POST /compile</strong></p>
+                    <p><strong>Description:</strong> Compiles and executes code using Judge0 API</p>
+                    <p><strong>Request Body:</strong></p>
+                    <pre>{
+  "code": "print('Hello')",
+  "language": "python",
+  "stdin": ""
+}</pre>
+                    <p><strong>Response:</strong></p>
+                    <pre>{
+  "stdout": "Hello\n",
+  "stderr": "",
+  "time": "0.023",
+  "memory": "3840"
+}</pre>
+                </div>
+            </section>
+
+            <!-- Socket.IO Events -->
+            <section class="section">
+                <h2 class="section-title">🔌 Socket.IO Events</h2>
+                
+                <h3 class="subsection-title">Client → Server Events</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Payload</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>join_room</code></td>
+                            <td>{roomId, userId, language}</td>
+                            <td>User joins a collaboration room</td>
+                        </tr>
+                        <tr>
+                            <td><code>code_change_A</code></td>
+                            <td>{roomId, code}</td>
+                            <td>Code update in Screen A</td>
+                        </tr>
+                        <tr>
+                            <td><code>code_change_B</code></td>
+                            <td>{roomId, code}</td>
+                            <td>Code update in Screen B</td>
+                        </tr>
+                        <tr>
+                            <td><code>language_change</code></td>
+                            <td>{roomId, language}</td>
+                            <td>Programming language changed</td>
+                        </tr>
+                        <tr>
+                            <td><code>disconnect</code></td>
+                            <td>-</td>
+                            <td>User disconnects from server</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Server → Client Events</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Payload</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>room_joined</code></td>
+                            <td>{roomId, language, codeA, codeB}</td>
+                            <td>Confirmation of successful room join</td>
+                        </tr>
+                        <tr>
+                            <td><code>code_update_A</code></td>
+                            <td>{code}</td>
+                            <td>Broadcast Screen A code changes to other users</td>
+                        </tr>
+                        <tr>
+                            <td><code>code_update_B</code></td>
+                            <td>{code}</td>
+                            <td>Broadcast Screen B code changes to other users</td>
+                        </tr>
+                        <tr>
+                            <td><code>language_changed</code></td>
+                            <td>{language}</td>
+                            <td>Notify all users of language switch</td>
+                        </tr>
+                        <tr>
+                            <td><code>user_joined</code></td>
+                            <td>{userId}</td>
+                            <td>New user joined the room</td>
+                        </tr>
+                        <tr>
+                            <td><code>user_left</code></td>
+                            <td>{userId}</td>
+                            <td>User left the room</td>
+                        </tr>
+                        <tr>
+                            <td><code>error_message</code></td>
+                            <td>{message}</td>
+                            <td>Error notification to client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- System Workflow -->
+            <section class="section">
+                <h2 class="section-title">🔄 System Workflow</h2>
+                
+                <h3 class="subsection-title">User Journey: Creating and Joining a Room</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>User Opens Application</strong><br>
+                            Browser loads index.html and initializes Monaco editors in local mode
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Create/Join Room</strong><br>
+                            User can either create a new room (generates unique ID) or join existing room with ID
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>WebSocket Connection</strong><br>
+                            Client establishes Socket.IO connection and emits 'join_room' event
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Room Data Retrieval</strong><br>
+                            Server fetches room data from MongoDB and sends existing code to client
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <strong>Real-Time Synchronization</strong><br>
+                            All code changes are broadcasted to room participants via Socket.IO
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <strong>Code Execution</strong><br>
+                            User clicks "Run" → Code sent to Judge0 API → Results displayed in output panel
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">7</div>
+                        <div class="step-content">
+                            <strong>Auto-Save</strong><br>
+                            Code changes debounced and saved to MongoDB every 3 seconds
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Real-Time Collaboration Flow</h3>
+                <div class="data-flow">
+                    <div class="flow-step">
+                        <strong>User A types code</strong> → Client emits 'code_change_A' event
+                    </div>
+                    <div class="flow-step">
+                        <strong>Server receives event</strong> → Stores latest code in memory (latestCodeA Map)
+                    </div>
+                    <div class="flow-step">
+                        <strong>Server broadcasts</strong> → Sends 'code_update_A' to all clients in the room except sender
+                    </div>
+                    <div class="flow-step">
+                        <strong>Other clients update</strong> → Monaco editor content synchronized automatically
+                    </div>
+                    <div class="flow-step">
+                        <strong>Debounced save</strong> → After 3 seconds of inactivity, code saved to MongoDB
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installation & Setup -->
+            <section class="section">
+                <h2 class="section-title">⚙️ Installation & Setup Guide</h2>
+                
+                <h3 class="subsection-title">Prerequisites</h3>
+                <ul>
+                    <li><strong>Node.js:</strong> Version 18 or higher (<a href="https://nodejs.org/" target="_blank">Download</a>)</li>
+                    <li><strong>MongoDB:</strong> Version 6.0+ (<a href="https://www.mongodb.com/try/download/community" target="_blank">Download Community Edition</a>)</li>
+                    <li><strong>Git:</strong> For cloning the repository</li>
+                    <li><strong>Judge0 API Key:</strong> Optional, for code execution (free tier available)</li>
+                </ul>
+
+                <h3 class="subsection-title">Step-by-Step Installation</h3>
+                
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Clone the Repository</strong>
+                            <pre style="margin-top: 10px;">git clone https://github.com/OmPrakash-source/Real-Time-Code_Editor.git
+cd Real-Time-Code_Editor</pre>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Install Dependencies</strong>
+                            <pre style="margin-top: 10px;">npm install</pre>
+                            <small>This installs all required packages listed in package.json</small>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Configure Environment Variables</strong>
+                            <p>The <code>.env</code> file contains:</p>
+                            <pre style="margin-top: 10px;">PORT=4000
+MONGODB_URI=mongodb://127.0.0.1:27017/realtime-code-editor
+JUDGE0_URL=https://judge0-ce.p.rapidapi.com
+FILE_EXPIRY_HOURS=6</pre>
+                            <small>Modify as needed for your environment</small>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Start MongoDB Server</strong>
+                            <pre style="margin-top: 10px;">mongod</pre>
+                            <small>Ensure MongoDB is running on default port 27017</small>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <strong>Start the Application</strong>
+                            <pre style="margin-top: 10px;">npm run dev</pre>
+                            <small>Development server with auto-restart using nodemon</small>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <strong>Access the Application</strong>
+                            <p style="margin-top: 10px;">Open your browser and navigate to:</p>
+                            <pre style="margin-top: 10px;">http://localhost:4000</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Production Deployment</h3>
+                <div class="info-box">
+                    <p><strong>For production environments:</strong></p>
+                    <ul style="margin-top: 10px;">
+                        <li>Use <code>npm start</code> instead of <code>npm run dev</code></li>
+                        <li>Configure MongoDB Atlas for cloud database</li>
+                        <li>Set up process manager (PM2) for Node.js application</li>
+                        <li>Enable HTTPS with SSL certificates</li>
+                        <li>Configure CORS appropriately for your domain</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Project Structure -->
+            <section class="section">
+                <h2 class="section-title">📁 Project Structure</h2>
+                <pre>project-root/
+├── backend/
+│   ├── models/
+│   │   ├── Room.js              # Room schema
+│   │   ├── File.js              # File schema
+│   │   └── UserSession.js       # User session schema
+│   ├── routes/
+│   │   ├── room.js              # Room API endpoints
+│   │   └── compile.js           # Code compilation endpoint
+│   ├── utils/
+│   │   └── idGenerator.js       # Room ID generation
+│   ├── compiler/
+│   │   └── judge0.js            # Judge0 API integration
+│   ├── server.js                # Main server file
+│   └── socket.js                # Socket.IO event handlers
+├── frontend/
+│   ├── index.html               # Main HTML page
+│   ├── style.css                # Application styles
+│   ├── app.js                   # Main application logic
+│   ├── socket.js                # Socket.IO client wrapper
+│   ├── EditorComponent.js       # Base editor component
+│   ├── EditorA.js               # Screen A editor instance
+│   └── EditorB.js               # Screen B editor instance
+├── yjs-collab/                  # Yjs collaboration server (alternative)
+│   ├── server.js
+│   └── client.html
+├── .env                         # Environment variables
+├── package.json                 # Project dependencies
+└── README.md                    # Project documentation</pre>
+            </section>
+
+            <!-- Key Functionalities -->
+            <section class="section">
+                <h2 class="section-title">🎮 Key Functionalities Explained</h2>
+                
+                <h3 class="subsection-title">1. Debounced Auto-Save Mechanism</h3>
+                <div class="highlight">
+                    <p>To prevent excessive database writes, the system implements a debouncing strategy:</p>
+                    <ul>
+                        <li>When code changes, a timer starts (3000ms)</li>
+                        <li>If more changes occur before timer expires, the timer resets</li>
+                        <li>Only when user stops typing for 3 seconds, the code is saved to MongoDB</li>
+                        <li>Separate timers maintained for Screen A and Screen B</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">2. Automated Cleanup Cron Job</h3>
+                <div class="highlight">
+                    <p>A scheduled task runs every 15 minutes to maintain database efficiency:</p>
+                    <ul>
+                        <li><strong>Delete Old Files:</strong> Removes files not updated in 6+ hours</li>
+                        <li><strong>Delete Empty Rooms:</strong> Removes rooms with no active members</li>
+                        <li><strong>Clean User Sessions:</strong> Removes orphaned user session records</li>
+                        <li>Configurable expiry duration via <code>FILE_EXPIRY_HOURS</code> environment variable</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">3. Language Mapping & Monaco Integration</h3>
+                <div class="highlight">
+                    <p>Language identifiers are mapped for compatibility:</p>
+                    <ul>
+                        <li>Application uses simple names: 'c', 'cpp', 'java', 'python', 'javascript'</li>
+                        <li>Monaco Editor expects specific language IDs for syntax highlighting</li>
+                        <li>Judge0 API requires language ID numbers (C=50, C++=54, Java=62, etc.)</li>
+                        <li>Mapping ensures consistent language handling across components</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">4. Room Member Management</h3>
+                <div class="highlight">
+                    <p>User presence tracking in collaborative rooms:</p>
+                    <ul>
+                        <li>On join: User ID added to room's <code>members</code> array</li>
+                        <li>On disconnect: User ID removed from array</li>
+                        <li>UserSession document created with socket ID mapping</li>
+                        <li>Broadcast events to notify other users of joins/leaves</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Challenges & Solutions -->
+            <section class="section">
+                <h2 class="section-title">🛠️ Challenges Faced & Solutions</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Challenge: Race Conditions</h3>
+                        <p><strong>Problem:</strong> Multiple simultaneous code updates causing data inconsistency</p>
+                        <p><strong>Solution:</strong> Implemented debouncing with Map-based state management to track latest code changes</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Challenge: Database Bloat</h3>
+                        <p><strong>Problem:</strong> Unused rooms and old files consuming storage</p>
+                        <p><strong>Solution:</strong> Created automated cron job for periodic cleanup based on timestamps</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Challenge: Socket Disconnections</h3>
+                        <p><strong>Problem:</strong> Users not properly removed from rooms on disconnection</p>
+                        <p><strong>Solution:</strong> Implemented disconnect event handler with proper cleanup of sessions and room members</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Challenge: Editor State Sync</h3>
+                        <p><strong>Problem:</strong> New users not receiving current code state when joining</p>
+                        <p><strong>Solution:</strong> Server sends complete room state (language, codeA, codeB) on 'room_joined' event</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Challenge: Code Execution Security</h3>
+                        <p><strong>Problem:</strong> Running arbitrary user code poses security risks</p>
+                        <p><strong>Solution:</strong> Delegated execution to Judge0 sandboxed environment via API</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Challenge: Dual Editor Management</h3>
+                        <p><strong>Problem:</strong> Tracking changes for two independent editors</p>
+                        <p><strong>Solution:</strong> Separate Socket.IO events and save timers for Screen A and Screen B</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Future Enhancements -->
+            <section class="section">
+                <h2 class="section-title">🚀 Future Enhancements</h2>
+                <ul>
+                    <li><span class="badge">Feature</span> <strong>User Authentication:</strong> Implement login system with user profiles and session management</li>
+                    <li><span class="badge">Feature</span> <strong>File System:</strong> Allow users to create multiple files within a room</li>
+                    <li><span class="badge">Feature</span> <strong>Version History:</strong> Git-like version control for code with rollback capability</li>
+                    <li><span class="badge">Feature</span> <strong>Video/Audio Chat:</strong> Integrated WebRTC for voice/video communication</li>
+                    <li><span class="badge">Feature</span> <strong>Cursor Tracking:</strong> Show other users' cursor positions in real-time</li>
+                    <li><span class="badge">Feature</span> <strong>Code Snippets:</strong> Library of reusable code templates</li>
+                    <li><span class="badge">Enhancement</span> <strong>Mobile Responsive:</strong> Optimized UI for tablets and mobile devices</li>
+                    <li><span class="badge">Enhancement</span> <strong>Themes:</strong> Dark mode and customizable editor themes</li>
+                    <li><span class="badge">Enhancement</span> <strong>Export Functionality:</strong> Download code as files or share via GitHub Gist</li>
+                    <li><span class="badge">Performance</span> <strong>CRDT Integration:</strong> Full Yjs implementation for conflict-free merging</li>
+                    <li><span class="badge">Security</span> <strong>Room Passwords:</strong> Private rooms with password protection</li>
+                    <li><span class="badge">Feature</span> <strong>Code Review:</strong> Commenting and annotation system for collaborative review</li>
+                </ul>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="section">
+                <h2 class="section-title">📝 Conclusion</h2>
+                <p>
+                    The Real-Time Collaborative Code Editor successfully demonstrates the implementation of a full-stack 
+                    web application with real-time communication capabilities. By leveraging modern technologies like 
+                    Socket.IO, MongoDB, and Monaco Editor, the system provides a seamless collaborative coding experience 
+                    suitable for remote teams, educational institutions, and coding interview platforms.
+                </p>
+                <p style="margin-top: 15px;">
+                    The project showcases proficiency in:
+                </p>
+                <ul>
+                    <li><strong>Backend Development:</strong> Node.js, Express.js, RESTful API design</li>
+                    <li><strong>Real-Time Communication:</strong> WebSocket protocols with Socket.IO</li>
+                    <li><strong>Database Management:</strong> MongoDB schema design and optimization</li>
+                    <li><strong>Frontend Development:</strong> Vanilla JavaScript, DOM manipulation, event handling</li>
+                    <li><strong>System Architecture:</strong> Three-tier architecture with separation of concerns</li>
+                    <li><strong>DevOps:</strong> Environment configuration, automated tasks, deployment considerations</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    The application is production-ready with features like auto-save, automated cleanup, and scalable 
+                    architecture, making it a robust solution for collaborative coding needs.
+                </p>
+            </section>
+
+            <!-- References -->
+            <section class="section">
+                <h2 class="section-title">📚 References & Resources</h2>
+                <ul>
+                    <li><strong>Socket.IO Documentation:</strong> <a href="https://socket.io/docs/" target="_blank">https://socket.io/docs/</a></li>
+                    <li><strong>Monaco Editor:</strong> <a href="https://microsoft.github.io/monaco-editor/" target="_blank">https://microsoft.github.io/monaco-editor/</a></li>
+                    <li><strong>MongoDB Documentation:</strong> <a href="https://www.mongodb.com/docs/" target="_blank">https://www.mongodb.com/docs/</a></li>
+                    <li><strong>Judge0 CE:</strong> <a href="https://ce.judge0.com/" target="_blank">https://ce.judge0.com/</a></li>
+                    <li><strong>Express.js Guide:</strong> <a href="https://expressjs.com/en/guide/routing.html" target="_blank">https://expressjs.com/en/guide/routing.html</a></li>
+                    <li><strong>Node.js Best Practices:</strong> <a href="https://github.com/goldbergyoni/nodebestpractices" target="_blank">https://github.com/goldbergyoni/nodebestpractices</a></li>
+                    <li><strong>Yjs CRDT:</strong> <a href="https://docs.yjs.dev/" target="_blank">https://docs.yjs.dev/</a></li>
+                </ul>
+            </section>
+
+            <!-- Appendices projectInformation -->
+            <section class="section">
+                <h2 class="section-title">📎 Appendix: Project Information</h2>
+                
+                <h3 class="subsection-title">Package Dependencies</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>express</code></td>
+                            <td>^4.19.0</td>
+                            <td>Web application framework</td>
+                        </tr>
+                        <tr>
+                            <td><code>socket.io</code></td>
+                            <td>^4.8.0</td>
+                            <td>Real-time bidirectional communication</td>
+                        </tr>
+                        <tr>
+                            <td><code>mongoose</code></td>
+                            <td>^8.0.0</td>
+                            <td>MongoDB object modeling</td>
+                        </tr>
+                        <tr>
+                            <td><code>axios</code></td>
+                            <td>^1.7.0</td>
+                            <td>HTTP client for Judge0 API calls</td>
+                        </tr>
+                        <tr>
+                            <td><code>dotenv</code></td>
+                            <td>^16.4.0</td>
+                            <td>Environment variable management</td>
+                        </tr>
+                        <tr>
+                            <td><code>node-cron</code></td>
+                            <td>^3.0.3</td>
+                            <td>Scheduled task automation</td>
+                        </tr>
+                        <tr>
+                            <td><code>cors</code></td>
+                            <td>^2.8.5</td>
+                            <td>Enable Cross-Origin Resource Sharing</td>
+                        </tr>
+                        <tr>
+                            <td><code>morgan</code></td>
+                            <td>^1.10.0</td>
+                            <td>HTTP request logger middleware</td>
+                        </tr>
+                        <tr>
+                            <td><code>y-websocket</code></td>
+                            <td>^3.0.0</td>
+                            <td>Yjs WebSocket provider (optional CRDT)</td>
+                        </tr>
+                        <tr>
+                            <td><code>nodemon</code></td>
+                            <td>^3.1.0</td>
+                            <td>Development auto-restart (devDependency)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Environment Configuration</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Default Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>PORT</code></td>
+                            <td>4000</td>
+                            <td>Server port number</td>
+                        </tr>
+                        <tr>
+                            <td><code>MONGODB_URI</code></td>
+                            <td>mongodb://127.0.0.1:27017/realtime-code-editor</td>
+                            <td>MongoDB connection string</td>
+                        </tr>
+                        <tr>
+                            <td><code>JUDGE0_URL</code></td>
+                            <td>https://judge0-ce.p.rapidapi.com</td>
+                            <td>Judge0 API endpoint</td>
+                        </tr>
+                        <tr>
+                            <td><code>FILE_EXPIRY_HOURS</code></td>
+                            <td>6</td>
+                            <td>Hours before files are auto-deleted</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Supported Programming Languages</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Language</th>
+                            <th>Judge0 ID</th>
+                            <th>Monaco Language ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>C</td>
+                            <td>50</td>
+                            <td>c</td>
+                        </tr>
+                        <tr>
+                            <td>C++</td>
+                            <td>54</td>
+                            <td>cpp</td>
+                        </tr>
+                        <tr>
+                            <td>Java</td>
+                            <td>62</td>
+                            <td>java</td>
+                        </tr>
+                        <tr>
+                            <td>Python</td>
+                            <td>71</td>
+                            <td>python</td>
+                        </tr>
+                        <tr>
+                            <td>JavaScript</td>
+                            <td>63</td>
+                            <td>javascript</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3 style="margin-bottom: 10px;">Real-Time Collaborative Code Editor</h3>
+            <p>Major Project Documentation • Version 1.0.0</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                © 2025 • Built with Node.js, Socket.IO, MongoDB & Monaco Editor
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.8;">
+                For inquiries and support, please contact the development team
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Print functionality
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P or Cmd+P to print/save as PDF
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        // Smooth scroll for any internal links (if added)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

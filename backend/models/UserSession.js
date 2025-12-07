@@ -1,19 +1,20 @@
+// UserSession.js
 const mongoose = require('mongoose');
 
 const UserSessionSchema = new mongoose.Schema({
-    userId: {
+    userId: { //how is in room 
         type: String,
-        required: true,
-        index: true
+        required: true, //User ID it can't be null and empty
+        index: true //Index for faster lookup
     },
-    roomId: {
+    roomId: { //in which room user is in
         type: String,
-        required: true,
-        index: true
+        required: true, //Room ID it can't be null and empty
+        index: true //Index for faster lookup
     },
-    joinedAt: {
+    joinedAt: { //when user joined room there time 
         type: Date,
-        default: Date.now
+        default: Date.now //Default joined is current time
     }
 });
 
