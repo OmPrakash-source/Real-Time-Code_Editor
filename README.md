@@ -43,10 +43,5 @@ A real-time collaborative code editor built with Node.js, Socket.IO, MongoDB, an
 - Code compilation via Judge0 API
 - Room management
 
-cd C:\Users\omjha\OneDrive\Desktop\The\project-root
+location hai ye :- cd C:\Users\omjha\OneDrive\Desktop\The\project-root
 npm run dev
-
-🟢 Green (#d4edda) - Start/user actions
-🟡 Yellow (#fff3cd) - Active/processing states
-🔵 Blue (#cce5ff) - Results/output
-🔴 Red (#ffe1e1, #f8d7da) - Database/end states

@@ -15,7 +15,7 @@ const LANGUAGE_ID_MAP = {
 
 function decode(field) {
     if (!field) return "";
-    return Buffer.from(field, "base64").toString("utf8");
+    return Buffer.from(field, "base64").toString("utf8"); // base64 use to handle special characters
 }
 
 async function runCode({ language, sourceCode, stdin }) {

@@ -14,7 +14,7 @@ const saveTimersB = new Map();
 const latestCodeA = new Map();
 const latestCodeB = new Map();
 // socketId -> { roomId, userId }
-const socketRoomMap = new Map();
+const socketRoomMap = new Map(); //socketRoomMap is a part of redis use for State Caching
 
 /**
  * Initialize Socket.IO events
@@ -98,7 +98,8 @@ module.exports = function initSocket(io) {
 
                 // Debounced save
                 latestCode.set(roomId, code);
-
+                //latest code is a part of redis use for State Caching
+                //if timer is already running is a part of redis use for State Caching
                 if (saveTimers.has(roomId)) {
                     clearTimeout(saveTimers.get(roomId));
                 }

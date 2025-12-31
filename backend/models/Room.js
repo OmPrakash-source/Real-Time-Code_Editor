@@ -13,11 +13,11 @@ const RoomSchema = new mongoose.Schema({
     },
     codeA: {
         type: String,
-        default: 'console.log("Hello World")'
+        default: 'console.log("Hello World by Editor A")'
     },
     codeB: {
         type: String,
-        default: 'console.log("Hello World")'
+        default: 'console.log("Hello World by Editor B")'
     },
     createdAt: {
         type: Date,
