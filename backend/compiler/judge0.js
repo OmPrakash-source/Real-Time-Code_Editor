@@ -4,6 +4,7 @@ const JUDGE0_URL = "https://judge0-ce.p.rapidapi.com";
 const RAPIDAPI_KEY = "1847d639e7msh264c4620391f518p101b55jsn12c0099d99f7";
 const RAPIDAPI_HOST = "judge0-ce.p.rapidapi.com";
 
+// Judge0 ID
 const LANGUAGE_ID_MAP = {
     c: 50,
     cpp: 54,
@@ -18,7 +19,7 @@ function decode(field) {
 }
 
 async function runCode({ language, sourceCode, stdin }) {
-    const languageId = LANGUAGE_ID_MAP[language];
+    const languageId = LANGUAGE_ID_MAP[language]; //convert language to judge0 id
     if (!languageId) throw new Error("Unsupported language");
 
     const headers = {
@@ -46,10 +47,10 @@ async function runCode({ language, sourceCode, stdin }) {
         { params, headers }
     );
 
-    const out = res.data;
+    const out = res.data; //Extract Response Data
 
     return {
-        stdout: decode(out.stdout),
+        stdout: decode(out.stdout), //Decode Base64 to UTF-8  Return Formatted Results
         stderr: decode(out.stderr || out.compile_output || out.message),
         time: out.time,
         memory: out.memory

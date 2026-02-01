@@ -9,15 +9,15 @@ const RoomSchema = new mongoose.Schema({
     },
     language: {
         type: String,
-        default: 'javascript'
+        default: 'C++'
     },
     codeA: {
         type: String,
-        default: ''
+        default: '#include <iostream>\nusing namespace std;\nint main() {\ncout << "Hello World";\nreturn 0;\n}'
     },
     codeB: {
         type: String,
-        default: ''
+        default: '#include <iostream>\nusing namespace std;\nint main() {\ncout << "Hello World";\nreturn 0;\n}'
     },
     createdAt: {
         type: Date,
