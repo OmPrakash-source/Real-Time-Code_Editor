@@ -1,0 +1,7 @@
+node_modules/
+.env
+.vscode/
+.github/
+INTERVIEW_PITCH.md
+APPLICATION_OVERVIEW.md
+README.md
