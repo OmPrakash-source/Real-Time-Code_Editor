@@ -42,6 +42,3 @@ A real-time collaborative code editor built with Node.js, Socket.IO, MongoDB, an
 - Multi-language support (C, C++, Java, Python, JavaScript)
 - Code compilation via Judge0 API
 - Room management
-
-cd c:\Users\project-root
-npm run dev
