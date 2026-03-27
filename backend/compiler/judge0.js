@@ -10,7 +10,8 @@ const LANGUAGE_ID_MAP = {
     cpp: 54,
     java: 62,
     python: 71,
-    javascript: 63
+    javascript: 63,
+    php: 68
 };
 
 function decode(field) {
