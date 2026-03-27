@@ -34,12 +34,12 @@ A real-time collaborative code editor built with Node.js, Socket.IO, MongoDB, an
     ```
 
 5.  **Access App**
-    Open [http://localhost:4000](https://real-time-code-editor-vy3d.onrender.com/) in your browser.
+    Open [https://real-time-code-editor-vy3d.onrender.com](https://real-time-code-editor-vy3d.onrender.com/) in your browser.
 
 ## Features
 
 - Real-time code collaboration
-- Multi-language support (C, C++, Java, Python, JavaScript)
+- Multi-language support (C, C++, Java, Python, JavaScript,php)
 - Code compilation via Judge0 API
 - Room management
 
