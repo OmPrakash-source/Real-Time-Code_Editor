@@ -34,8 +34,7 @@ A real-time collaborative code editor built with Node.js, Socket.IO, MongoDB, an
     ```
 
 5.  **Access App**
-    Open [[http://localhost:4000](https://real-time-code-editor-vy3d.onrender.com/)
-    ]([http://localhost:4000](https://real-time-code-editor-vy3d.onrender.com/)) in your browser.
+    Open [http://localhost:4000](https://real-time-code-editor-vy3d.onrender.com/) in your browser.
 
 ## Features
 
