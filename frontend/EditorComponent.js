@@ -29,7 +29,8 @@ class EditorComponent {
             cpp: 'cpp',
             java: 'java',
             python: 'python',
-            javascript: 'javascript'
+            javascript: 'javascript',
+            php: 'php'
         };
 
         this.editor = monaco.editor.create(container, {
