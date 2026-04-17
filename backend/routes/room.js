@@ -41,11 +41,16 @@ router.post('/create', async (req, res) => {
             language: language || 'javascript'
         });
 
-        await File.create({
-            roomId,
-            code: '',
-            lastUpdated: new Date()
-        });
+        await File.findOneAndUpdate(
+            { roomId },
+            { code: '', lastUpdated: new Date() },
+            { upsert: true, new: true }
+        );
+        // await File.create({
+        //     roomId,
+        //     code: '',
+        //     lastUpdated: new Date()
+        // });
 
         return res.status(201).json({
             roomId: room.roomId,

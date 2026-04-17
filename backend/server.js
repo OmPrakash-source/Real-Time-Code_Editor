@@ -7,7 +7,13 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 
+// Change this:
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+// To this:
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config({ path: path.join(__dirname, '..', '.env') });
+}
 
 const Room = require('./models/Room');
 const File = require('./models/File');
