@@ -135,7 +135,7 @@ select {
   min-width: 0;
 }
 
-.editor-screen {
+.editor-screen, .side-panel, .output-panel, .chat-panel, .dual-editor-layout {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -143,7 +143,23 @@ select {
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
-  transition: flex 0s; /* Instant resize */
+  transition: flex 0.2s ease-out; /* Smooth transition for equalization/collapsing */
+}
+
+/* Override for dragging (disable transition for performance) */
+body.resizing-horizontal .editor-screen,
+body.resizing-horizontal .dual-editor-layout,
+body.resizing-horizontal .side-panel,
+body.resizing-vertical .output-panel,
+body.resizing-vertical .chat-panel {
+  transition: none !important;
+}
+
+body.resizing-horizontal {
+  cursor: col-resize !important;
+}
+body.resizing-vertical {
+  cursor: row-resize !important;
 }
 
 .editor-header {

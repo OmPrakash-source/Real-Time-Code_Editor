@@ -344,75 +344,127 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustMonacoLayout();
     });
 
-    // --- Resizing Logic ---
-    function setupResizer(gutterId, type, updateFn) {
-        const gutter = document.getElementById(gutterId);
-        if (!gutter) return;
+    // --- Advanced Resizing System ---
+    const SplitManager = {
+        init() {
+            this.loadLayout();
+            this.setupResizers();
+        },
 
-        let isResizing = false;
+        loadLayout() {
+            const saved = localStorage.getItem('editor_layout');
+            if (!saved) return;
+            const config = JSON.parse(saved);
 
-        gutter.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.body.style.cursor = type === 'horizontal' ? 'col-resize' : 'row-resize';
-            // Disable text selection during resize
-            document.body.style.userSelect = 'none';
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            updateFn(e);
-            adjustMonacoLayout();
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.style.cursor = 'default';
-                document.body.style.userSelect = 'auto';
+            if (config.editors) {
+                document.getElementById('screenA').style.flex = config.editors.a;
+                document.getElementById('screenB').style.flex = config.editors.b;
             }
-        });
-    }
+            if (config.main) {
+                document.getElementById('dualEditorLayout').style.flex = config.main.editors;
+                document.getElementById('sidePanel').style.flex = config.main.side;
+            }
+            if (config.side) {
+                document.getElementById('outputPanel').style.flex = config.side.output;
+                document.getElementById('chatPanel').style.flex = config.side.chat;
+            }
+        },
 
-    // Editor A / Editor B Resize
-    setupResizer('gutter-editors', 'horizontal', (e) => {
-        const dualLayout = document.getElementById('dualEditorLayout');
-        const containerRect = dualLayout.getBoundingClientRect();
-        const screenA = document.getElementById('screenA');
-        const screenB = document.getElementById('screenB');
-        
-        let percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-        percentage = Math.min(Math.max(percentage, 10), 90); // Min 10% for either
+        saveLayout() {
+            const config = {
+                editors: {
+                    a: document.getElementById('screenA').style.flex || 1,
+                    b: document.getElementById('screenB').style.flex || 1
+                },
+                main: {
+                    editors: document.getElementById('dualEditorLayout').style.flex || 2,
+                    side: document.getElementById('sidePanel').style.flex || 1
+                },
+                side: {
+                    output: document.getElementById('outputPanel').style.flex || 1,
+                    chat: document.getElementById('chatPanel').style.flex || 1
+                }
+            };
+            localStorage.setItem('editor_layout', JSON.stringify(config));
+        },
 
-        screenA.style.flex = percentage;
-        screenB.style.flex = 100 - percentage;
-    });
+        setupResizers() {
+            // Screen A | Screen B
+            this.addResizer('gutter-editors', 'horizontal', (e, rect) => {
+                const a = document.getElementById('screenA');
+                const b = document.getElementById('screenB');
+                let val = ((e.clientX - rect.left) / rect.width) * 100;
+                val = Math.min(Math.max(val, 15), 85);
+                a.style.flex = val;
+                b.style.flex = 100 - val;
+            }, 'dualEditorLayout');
 
-    // Main Layout / Side Panel Resize
-    setupResizer('gutter-main', 'horizontal', (e) => {
-        const mainLayout = document.getElementById('mainLayout');
-        const containerRect = mainLayout.getBoundingClientRect();
-        const dualEditorLayout = document.getElementById('dualEditorLayout');
-        const sidePanel = document.getElementById('sidePanel');
-        
-        let percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-        percentage = Math.min(Math.max(percentage, 20), 80);
+            // Editors | Side Panel
+            this.addResizer('gutter-main', 'horizontal', (e, rect) => {
+                const editors = document.getElementById('dualEditorLayout');
+                const side = document.getElementById('sidePanel');
+                let val = ((e.clientX - rect.left) / rect.width) * 100;
+                val = Math.min(Math.max(val, 25), 75);
+                editors.style.flex = val;
+                side.style.flex = 100 - val;
+            }, 'mainLayout');
 
-        dualEditorLayout.style.flex = percentage;
-        sidePanel.style.flex = 100 - percentage;
-    });
+            // Output | Chat
+            this.addResizer('gutter-side', 'vertical', (e, rect) => {
+                const out = document.getElementById('outputPanel');
+                const chat = document.getElementById('chatPanel');
+                let val = ((e.clientY - rect.top) / rect.height) * 100;
+                val = Math.min(Math.max(val, 15), 85);
+                out.style.flex = val;
+                chat.style.flex = 100 - val;
+            }, 'sidePanel');
+        },
 
-    // Output / Chat Resize
-    setupResizer('gutter-side', 'vertical', (e) => {
-        const sidePanel = document.getElementById('sidePanel');
-        const containerRect = sidePanel.getBoundingClientRect();
-        const outputPanel = document.getElementById('outputPanel');
-        const chatPanel = document.getElementById('chatPanel');
-        
-        let percentage = ((e.clientY - containerRect.top) / containerRect.height) * 100;
-        percentage = Math.min(Math.max(percentage, 10), 90);
+        addResizer(id, direction, onDrag, containerId) {
+            const gutter = document.getElementById(id);
+            if (!gutter) return;
 
-        outputPanel.style.flex = percentage;
-        chatPanel.style.flex = 100 - percentage;
-    });
+            const container = document.getElementById(containerId);
+            let isDragging = false;
+
+            const startDragging = () => {
+                isDragging = true;
+                document.body.classList.add('resizing-' + direction);
+                document.body.style.userSelect = 'none';
+            };
+
+            const stopDragging = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                document.body.classList.remove('resizing-' + direction);
+                document.body.style.userSelect = 'auto';
+                this.saveLayout();
+            };
+
+            gutter.addEventListener('mousedown', startDragging);
+            
+            // Double click to equalize
+            gutter.addEventListener('dblclick', () => {
+                const elements = direction === 'horizontal' ? 
+                    [container.firstElementChild, container.lastElementChild] :
+                    [container.firstElementChild, container.lastElementChild];
+                elements[0].style.flex = 1;
+                elements[1].style.flex = 1;
+                this.saveLayout();
+                adjustMonacoLayout();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const rect = container.getBoundingClientRect();
+                onDrag(e, rect);
+                adjustMonacoLayout();
+            });
+
+            document.addEventListener('mouseup', stopDragging);
+        }
+    };
+
+    SplitManager.init();
 
 });
