@@ -336,13 +336,83 @@ document.addEventListener('DOMContentLoaded', () => {
         isMinB = !isMinB;
         if (isMinB) {
             screenB.classList.add('collapsed');
-            dualLayout.classList.add('min-b');
             minBtnB.textContent = '+';
         } else {
             screenB.classList.remove('collapsed');
-            dualLayout.classList.remove('min-b');
             minBtnB.textContent = '_';
         }
         adjustMonacoLayout();
     });
+
+    // --- Resizing Logic ---
+    function setupResizer(gutterId, type, updateFn) {
+        const gutter = document.getElementById(gutterId);
+        if (!gutter) return;
+
+        let isResizing = false;
+
+        gutter.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = type === 'horizontal' ? 'col-resize' : 'row-resize';
+            // Disable text selection during resize
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            updateFn(e);
+            adjustMonacoLayout();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                document.body.style.cursor = 'default';
+                document.body.style.userSelect = 'auto';
+            }
+        });
+    }
+
+    // Editor A / Editor B Resize
+    setupResizer('gutter-editors', 'horizontal', (e) => {
+        const dualLayout = document.getElementById('dualEditorLayout');
+        const containerRect = dualLayout.getBoundingClientRect();
+        const screenA = document.getElementById('screenA');
+        const screenB = document.getElementById('screenB');
+        
+        let percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+        percentage = Math.min(Math.max(percentage, 10), 90); // Min 10% for either
+
+        screenA.style.flex = percentage;
+        screenB.style.flex = 100 - percentage;
+    });
+
+    // Main Layout / Side Panel Resize
+    setupResizer('gutter-main', 'horizontal', (e) => {
+        const mainLayout = document.getElementById('mainLayout');
+        const containerRect = mainLayout.getBoundingClientRect();
+        const dualEditorLayout = document.getElementById('dualEditorLayout');
+        const sidePanel = document.getElementById('sidePanel');
+        
+        let percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+        percentage = Math.min(Math.max(percentage, 20), 80);
+
+        dualEditorLayout.style.flex = percentage;
+        sidePanel.style.flex = 100 - percentage;
+    });
+
+    // Output / Chat Resize
+    setupResizer('gutter-side', 'vertical', (e) => {
+        const sidePanel = document.getElementById('sidePanel');
+        const containerRect = sidePanel.getBoundingClientRect();
+        const outputPanel = document.getElementById('outputPanel');
+        const chatPanel = document.getElementById('chatPanel');
+        
+        let percentage = ((e.clientY - containerRect.top) / containerRect.height) * 100;
+        percentage = Math.min(Math.max(percentage, 10), 90);
+
+        outputPanel.style.flex = percentage;
+        chatPanel.style.flex = 100 - percentage;
+    });
+
 });

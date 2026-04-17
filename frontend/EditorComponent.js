@@ -39,8 +39,19 @@ class EditorComponent {
             theme: 'vs-dark',
             automaticLayout: true,
             minimap: { enabled: false },
-            fontSize: 13,
-            scrollBeyondLastLine: false
+            fontSize: 14,
+            fontWeight: '400',
+            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+            cursorSmoothCaretAnimation: "on",
+            cursorBlinking: "smooth",
+            smoothScrolling: true,
+            scrollBeyondLastLine: false,
+            padding: { top: 10, bottom: 10 },
+            mouseWheelZoom: true,
+            scrollbar: {
+                vertical: 'hidden',
+                horizontal: 'hidden'
+            }
         });
 
         // Listen to local code changes

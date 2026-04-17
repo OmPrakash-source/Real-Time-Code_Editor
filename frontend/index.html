@@ -45,8 +45,8 @@
       </div>
     </section>
 
-    <main class="main-layout">
-      <div class="dual-editor-layout">
+    <main class="main-layout" id="mainLayout">
+      <div class="dual-editor-layout" id="dualEditorLayout">
         <div class="editor-screen" id="screenA">
           <div class="editor-header">
             <span>Screen A</span>
@@ -54,6 +54,8 @@
           </div>
           <div id="editorContainerA" class="editor-container"></div>
         </div>
+
+        <div class="gutter gutter-horizontal" id="gutter-editors"></div>
 
         <div class="editor-screen" id="screenB">
           <div class="editor-header">
@@ -64,28 +66,38 @@
         </div>
       </div>
 
-      <div class="output-panel">
-        <h2>Output</h2>
-        <label for="stdinInput">stdin (optional):</label>
-        <textarea id="stdinInput" rows="3"></textarea>
+      <div class="gutter gutter-horizontal" id="gutter-main"></div>
 
-        <div class="output-section">
-          <h3>stdout</h3>
-          <pre id="stdout"></pre>
+      <div class="side-panel" id="sidePanel">
+        <div class="output-panel" id="outputPanel">
+          <div class="panel-header">
+            <h2>Output</h2>
+          </div>
+          <div class="panel-body">
+            <label for="stdinInput">stdin (optional):</label>
+            <textarea id="stdinInput" rows="3"></textarea>
+  
+            <div class="output-section">
+              <h3>stdout</h3>
+              <pre id="stdout"></pre>
+            </div>
+            <div class="output-section">
+              <h3>stderr</h3>
+              <pre id="stderr"></pre>
+            </div>
+            <div class="output-meta" id="executionMeta"></div>
+          </div>
         </div>
-        <div class="output-section">
-          <h3>stderr</h3>
-          <pre id="stderr"></pre>
-        </div>
-        <div class="output-meta" id="executionMeta"></div>
-      </div>
-      
-      <div class="chat-panel">
-        <div class="chat-header">Room Chat</div>
-        <ul id="chatMessages" class="chat-messages"></ul>
-        <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off"/>
-          <button id="sendChatBtn">Send</button>
+        
+        <div class="gutter gutter-vertical" id="gutter-side"></div>
+
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-header">Room Chat</div>
+          <ul id="chatMessages" class="chat-messages"></ul>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off"/>
+            <button id="sendChatBtn">Send</button>
+          </div>
         </div>
       </div>
     </main>
