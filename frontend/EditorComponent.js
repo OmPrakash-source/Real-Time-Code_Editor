@@ -29,7 +29,8 @@ class EditorComponent {
             cpp: 'cpp',
             java: 'java',
             python: 'python',
-            javascript: 'javascript'
+            javascript: 'javascript',
+            php: 'php'
         };
 
         this.editor = monaco.editor.create(container, {
@@ -134,7 +135,8 @@ class EditorComponent {
             cpp: 'cpp',
             java: 'java',
             python: 'python',
-            javascript: 'javascript'
+            javascript: 'javascript',
+            php: 'php',
         };
         const monacoLang = MONACO_LANGUAGE_MAP[language] || 'javascript';
         monaco.editor.setModelLanguage(this.editor.getModel(), monacoLang);

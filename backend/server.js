@@ -49,11 +49,10 @@ app.get('*', (req, res) => {
 initSocket(io);
 
 // ---- MongoDB Connection ----
-if (!process.env.MONGODB_URI) {
-  throw new Error("MONGODB_URI is not defined");
-}
-
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 

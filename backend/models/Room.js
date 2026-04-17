@@ -9,15 +9,15 @@ const RoomSchema = new mongoose.Schema({
     },
     language: {
         type: String,
-        default: 'javascript'
+        default: 'C++'
     },
     codeA: {
         type: String,
-        default: 'console.log("Hello World by Editor A")'
+        default: ''
     },
     codeB: {
         type: String,
-        default: 'console.log("Hello World by Editor B")'
+        default: ''
     },
     createdAt: {
         type: Date,

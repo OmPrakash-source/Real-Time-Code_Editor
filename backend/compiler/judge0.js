@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-const JUDGE0_URL = "https://judge0-ce.p.rapidapi.com";
-const RAPIDAPI_KEY = "1847d639e7msh264c4620391f518p101b55jsn12c0099d99f7";
-const RAPIDAPI_HOST = "judge0-ce.p.rapidapi.com";
+const JUDGE0_URL = process.env.JUDGE0_URL || "https://judge0-ce.p.rapidapi.com";
+const RAPIDAPI_KEY = process.env.JUDGE0_API_KEY;
+const RAPIDAPI_HOST = process.env.JUDGE0_API_HOST || "judge0-ce.p.rapidapi.com";
 
 // Judge0 ID
 const LANGUAGE_ID_MAP = {
@@ -10,7 +10,8 @@ const LANGUAGE_ID_MAP = {
     cpp: 54,
     java: 62,
     python: 71,
-    javascript: 63
+    javascript: 63,
+    php: 68
 };
 
 function decode(field) {

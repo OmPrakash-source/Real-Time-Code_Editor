@@ -11,7 +11,8 @@ const MONACO_LANGUAGE_MAP = {
     cpp: 'cpp',
     java: 'java',
     python: 'python',
-    javascript: 'javascript'
+    javascript: 'javascript',
+    php: 'php'
 };
 
 /**
