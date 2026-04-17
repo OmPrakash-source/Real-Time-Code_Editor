@@ -7,7 +7,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const Room = require('./models/Room');
 const File = require('./models/File');
@@ -49,11 +49,11 @@ app.get('*', (req, res) => {
 initSocket(io);
 
 // ---- MongoDB Connection ----
-if (!process.env.MONGO_URI) {
-  throw new Error("MONGO_URI is not defined");
+if (!process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI is not defined");
 }
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
