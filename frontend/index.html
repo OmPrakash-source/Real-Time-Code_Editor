@@ -46,13 +46,19 @@
 
     <main class="main-layout">
       <div class="dual-editor-layout">
-        <div class="editor-screen">
-          <div class="editor-header">Screen A</div>
+        <div class="editor-screen" id="screenA">
+          <div class="editor-header">
+            <span>Screen A</span>
+            <button class="minimize-btn" id="minBtnA">_</button>
+          </div>
           <div id="editorContainerA" class="editor-container"></div>
         </div>
 
-        <div class="editor-screen">
-          <div class="editor-header">Screen B</div>
+        <div class="editor-screen" id="screenB">
+          <div class="editor-header">
+            <span>Screen B</span>
+            <button class="minimize-btn" id="minBtnB">_</button>
+          </div>
           <div id="editorContainerB" class="editor-container"></div>
         </div>
       </div>
@@ -71,6 +77,15 @@
           <pre id="stderr"></pre>
         </div>
         <div class="output-meta" id="executionMeta"></div>
+      </div>
+      
+      <div class="chat-panel">
+        <div class="chat-header">Room Chat</div>
+        <ul id="chatMessages" class="chat-messages"></ul>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off"/>
+          <button id="sendChatBtn">Send</button>
+        </div>
       </div>
     </main>
   </div>

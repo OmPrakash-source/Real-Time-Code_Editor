@@ -132,16 +132,27 @@ button:disabled {
   flex: 1;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 16px;
   padding: 16px 20px;
   min-height: 0;
 }
 
 .dual-editor-layout {
+  grid-row: span 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   min-height: 0;
+  transition: grid-template-columns 0.3s ease;
+}
+
+.dual-editor-layout.min-a {
+  grid-template-columns: 40px 1fr;
+}
+
+.dual-editor-layout.min-b {
+  grid-template-columns: 1fr 40px;
 }
 
 .editor-screen {
@@ -161,8 +172,25 @@ button:disabled {
   border-bottom: 1px solid rgba(96, 165, 250, 0.2);
   font-weight: 600;
   font-size: 0.95rem;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #93c5fd;
+}
+
+.minimize-btn {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.editor-screen.collapsed .editor-container {
+  display: none;
+}
+.editor-screen.collapsed .editor-header span {
+  display: none;
 }
 
 .editor-container {
@@ -245,6 +273,83 @@ button:disabled {
   background: rgba(96, 165, 250, 0.05);
   border-radius: 6px;
   font-family: 'JetBrains Mono', monospace;
+}
+
+/* Chat Styling */
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  min-height: 0;
+}
+
+.chat-header {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #6ee7b7;
+  font-weight: 600;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding-right: 8px;
+  margin-bottom: 12px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  word-break: break-word;
+}
+
+.message.self {
+  background: rgba(52, 211, 153, 0.15);
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.message.other {
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.msg-user {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+}
+
+#chatInput {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(3, 6, 23, 0.9);
+  color: inherit;
+}
+
+#sendChatBtn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  padding: 8px 16px;
 }
 
 /* Remote cursor styling in Monaco */

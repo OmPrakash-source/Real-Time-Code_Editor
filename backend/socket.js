@@ -276,5 +276,11 @@ module.exports = function initSocket(io) {
             if (!roomId || cursor === undefined) return;
             socket.to(roomId).emit('cursor_update_B', cursor);
         });
+
+        // Chat Message
+        socket.on('chat_message', ({ roomId, userId, text }) => {
+            if (!roomId || !userId || !text) return;
+            socket.to(roomId).emit('chat_message', { userId, text });
+        });
     });
 };

@@ -23,6 +23,9 @@ const socketApi = {
     },
     emitLanguageChange(roomId, language) {
         socket.emit('language_change', { roomId, language });
+    },
+    sendMessage(roomId, userId, text) {
+        socket.emit('chat_message', { roomId, userId, text });
     }
 };
 
@@ -79,6 +82,10 @@ socket.on('code_update_B', (code) => {
 
 socket.on('cursor_update_B', (cursor) => {
     window.dispatchEvent(new CustomEvent('socket:cursor_update_B', { detail: cursor }));
+});
+
+socket.on('chat_message', (detail) => {
+    window.dispatchEvent(new CustomEvent('socket:chat_message', { detail }));
 });
 
 window.socketApi = socketApi;

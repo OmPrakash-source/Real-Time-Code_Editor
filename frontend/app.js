@@ -252,4 +252,96 @@ document.addEventListener('DOMContentLoaded', () => {
         const { message } = e.detail || {};
         if (message) alert(message);
     });
+
+    // Chat logic
+    const chatInput = document.getElementById('chatInput');
+    const sendChatBtn = document.getElementById('sendChatBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    function appendMessage(userId, text, isSelf = false) {
+        const li = document.createElement('li');
+        li.className = `message ${isSelf ? 'self' : 'other'}`;
+        
+        const userSpan = document.createElement('span');
+        userSpan.className = 'msg-user';
+        userSpan.textContent = isSelf ? 'You' : userId;
+        
+        const textSpan = document.createElement('span');
+        textSpan.textContent = text;
+        
+        li.appendChild(userSpan);
+        li.appendChild(textSpan);
+        
+        chatMessages.appendChild(li);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendChatMessage() {
+        if (!currentRoomId) {
+            alert('Join a room first to chat');
+            return;
+        }
+        const text = chatInput.value.trim();
+        if (!text) return;
+        
+        window.socketApi.sendMessage(currentRoomId, currentUserId, text);
+        appendMessage(currentUserId, text, true);
+        chatInput.value = '';
+    }
+
+    sendChatBtn.addEventListener('click', sendChatMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+    });
+
+    window.addEventListener('socket:chat_message', (e) => {
+        const { userId, text } = e.detail;
+        appendMessage(userId, text, false);
+    });
+
+    // Minimize logic
+    const minBtnA = document.getElementById('minBtnA');
+    const minBtnB = document.getElementById('minBtnB');
+    const screenA = document.getElementById('screenA');
+    const screenB = document.getElementById('screenB');
+    const dualLayout = document.querySelector('.dual-editor-layout');
+
+    let isMinA = false;
+    let isMinB = false;
+
+    function adjustMonacoLayout() {
+        // give grid transition time to mostly settle
+        setTimeout(() => {
+            if (window.editorA && window.editorA.editor) window.editorA.editor.layout();
+            if (window.editorB && window.editorB.editor) window.editorB.editor.layout();
+        }, 300);
+    }
+
+    minBtnA.addEventListener('click', () => {
+        isMinA = !isMinA;
+        if (isMinA) {
+            screenA.classList.add('collapsed');
+            dualLayout.classList.add('min-a');
+            minBtnA.textContent = '+';
+        } else {
+            screenA.classList.remove('collapsed');
+            dualLayout.classList.remove('min-a');
+            minBtnA.textContent = '_';
+        }
+        adjustMonacoLayout();
+    });
+
+    minBtnB.addEventListener('click', () => {
+        isMinB = !isMinB;
+        if (isMinB) {
+            screenB.classList.add('collapsed');
+            dualLayout.classList.add('min-b');
+            minBtnB.textContent = '+';
+        } else {
+            screenB.classList.remove('collapsed');
+            dualLayout.classList.remove('min-b');
+            minBtnB.textContent = '_';
+        }
+        adjustMonacoLayout();
+    });
 });
