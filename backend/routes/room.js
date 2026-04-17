@@ -41,16 +41,16 @@ router.post('/create', async (req, res) => {
             language: language || 'javascript'
         });
 
-        await File.findOneAndUpdate(
-            { roomId },
-            { code: '', lastUpdated: new Date() },
-            { upsert: true, new: true }
-        );
-        // await File.create({
-        //     roomId,
-        //     code: '',
-        //     lastUpdated: new Date()
-        // });
+        // await File.findOneAndUpdate(
+        //     { roomId },
+        //     { code: '', lastUpdated: new Date() },
+        //     { upsert: true, new: true }
+        // );
+        await File.create({
+            roomId,
+            code: '',
+            lastUpdated: new Date()
+        });
 
         return res.status(201).json({
             roomId: room.roomId,
@@ -58,7 +58,7 @@ router.post('/create', async (req, res) => {
         });
     } catch (err) {
         console.error('Create room error:', err.message);
-        return res.status(500).json({ error: 'Failed to create room' });
+        return res.status(500).json({ error: 'Failed to create room: ' + err.message });
     }
 });
 
@@ -98,7 +98,7 @@ router.get('/:roomId', async (req, res) => {
         });
     } catch (err) {
         console.error('Get room error:', err.message);
-        return res.status(500).json({ error: 'Failed to fetch room' });
+        return res.status(500).json({ error: 'Failed to fetch room: ' + err.message });
     }
 });
 
