@@ -7,11 +7,11 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 
-// Change this:
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
-
-// To this:
-dotenv.config({ path: '/etc/secrets/.env' });
+if (process.env.NODE_ENV === 'production') {
+    dotenv.config({ path: '/etc/secrets/.env' });
+} else {
+    dotenv.config({ path: path.join(__dirname, '..', '.env') });
+}
 
 const Room = require('./models/Room');
 const File = require('./models/File');
